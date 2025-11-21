@@ -203,17 +203,6 @@ export default function Gen3blockTrainingLandingPage() {
                   Free Assessment
                 </button>
               </div>
-              <div className="mt-2 flex flex-wrap items-center gap-3">
-                <div className="flex items-center gap-2 rounded-lg border border-blue-200/50 bg-gradient-to-r from-blue-50 via-sky-50 to-cyan-50 px-3 py-1.5 transition-all duration-300 hover:scale-110 hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
-                  <span className="text-xs font-semibold text-blue-700">Foundation</span>
-                </div>
-                <div className="flex items-center gap-2 rounded-lg border border-blue-200/50 bg-gradient-to-r from-blue-50 via-blue-50 to-cyan-50 px-3 py-1.5 transition-all duration-300 hover:scale-110 hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
-                  <span className="text-xs font-semibold text-blue-700">Certification</span>
-                </div>
-                <div className="flex items-center gap-2 rounded-lg border border-slate-200/50 bg-gradient-to-r from-slate-50 via-slate-100 to-slate-50 px-3 py-1.5 transition-all duration-300 hover:scale-110 hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
-                  <span className="text-xs font-semibold text-slate-700">Corporate</span>
-                </div>
-              </div>
 
             </div>
 
