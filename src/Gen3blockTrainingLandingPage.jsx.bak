@@ -1,0 +1,809 @@
+import React, { useEffect, useRef } from 'react';
+import {
+  initializeHaptics,
+  addHapticFeedback,
+  createRippleWithHaptic,
+  VibrationPattern,
+  addMagneticEffect
+} from './utils/haptics';
+import {
+  initIntersectionAnimations,
+  initSectionReveal,
+  smoothScrollTo,
+  addStaggerAnimation
+} from './utils/scrollAnimations';
+import './animations.css';
+
+export default function Gen3blockTrainingLandingPage() {
+  const heroRef = useRef(null);
+  const navLinksRef = useRef([]);
+
+  useEffect(() => {
+    // Initialize haptic feedback for interactive elements
+    initializeHaptics();
+
+    // Initialize scroll animations
+    const cleanupScroll = initIntersectionAnimations('.fade-in-scroll', 'visible', {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px',
+    });
+
+    // Initialize section reveal
+    const cleanupSections = initSectionReveal('section');
+
+    // Add stagger animations to navigation links
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach((link, index) => {
+      link.style.animationDelay = `${index * 0.1}s`;
+      link.classList.add('animate-slide-in-bottom');
+    });
+
+    // Add magnetic effect to CTA buttons
+    const ctaButtons = document.querySelectorAll('.magnetic-btn');
+    const magneticCleanups = Array.from(ctaButtons).map(btn => addMagneticEffect(btn, 8));
+
+    // Cleanup function
+    return () => {
+      cleanupScroll?.();
+      cleanupSections?.();
+      magneticCleanups.forEach(cleanup => cleanup?.());
+    };
+  }, []);
+
+  // Handle ripple effect on button clicks
+  const handleButtonClick = (e) => {
+    const button = e.currentTarget;
+    if (button.classList.contains('ripple-container')) {
+      createRippleWithHaptic(e, button, VibrationPattern.CLICK);
+    }
+  };
+
+  // Handle smooth scroll
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    smoothScrollTo(href, 80);
+  };
+
+  return (
+    <div className="min-h-screen bg-cream-50 text-amber-950 font-sans">
+      {/* Navigation */}
+      <header className="sticky top-0 z-50 border-b border-purple-500/20 bg-gradient-to-b from-[#0A1024] to-[#0D1430]">
+        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-9 px-6">
+          <div className="flex items-center gap-3">
+            <div className="leading-tight">
+              <p className="bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-2xl font-black tracking-wider text-transparent">
+                GEN3BLOCK
+              </p>
+              <p className="text-xs font-light tracking-widest text-slate-400">TRAINING</p>
+            </div>
+          </div>
+
+          <nav className="hidden items-center gap-8 text-sm font-semibold text-white md:flex">
+            <a href="#readiness" onClick={(e) => handleNavClick(e, '#readiness')} className="animated-underline transition smooth-color hover:text-purple-400 glow-hover">AI readiness</a>
+            <a href="#who" onClick={(e) => handleNavClick(e, '#who')} className="animated-underline transition smooth-color hover:text-purple-400 glow-hover">Who we train</a>
+            <a href="#programmes" onClick={(e) => handleNavClick(e, '#programmes')} className="animated-underline transition smooth-color hover:text-purple-400 glow-hover">Programmes</a>
+            <a href="#policy" onClick={(e) => handleNavClick(e, '#policy')} className="animated-underline transition smooth-color hover:text-purple-400 glow-hover">UK policy</a>
+            <a href="#faqs" onClick={(e) => handleNavClick(e, '#faqs')} className="animated-underline transition smooth-color hover:text-purple-400 glow-hover">FAQs</a>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <button type="button" className="hidden rounded-xl border-2 border-purple-400/60 bg-gradient-to-r from-purple-50/40 to-indigo-50/40 px-4 py-2 text-xs font-semibold text-purple-300 backdrop-blur-sm transition hover:from-purple-100/50 hover:to-indigo-100/50 hover:border-purple-500/70 md:inline-flex">
+              Download overview
+            </button>
+            <button type="button" className="rounded-xl border-2 border-purple-400/60 bg-gradient-to-r from-purple-50/40 to-indigo-50/40 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm transition hover:from-purple-100/50 hover:to-indigo-100/50 hover:border-purple-500/70">
+              Book consultation
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        {/* Hero */}
+        <section className="border-b border-butter-200 bg-gradient-to-b from-butter-50 via-cream-100 to-butter-50">
+          <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 pb-16 pt-14 lg:flex-row lg:items-center">
+            <div className="flex-1 space-y-6">
+              <span className="inline-flex items-center gap-2 rounded-full border border-honey-300/50 bg-honey-50/80 px-4 py-2 text-xs font-medium text-honey-800 transition-all duration-300 hover:scale-105 hover:shadow-md hover:shadow-honey-200/50">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-honey-600" />
+                Northampton-based · UK policy aligned
+              </span>
+
+              <h1 className="text-balance text-4xl font-bold tracking-tight text-amber-950 sm:text-5xl lg:text-6xl">
+                Master AI Skills for
+                <span className="block text-amber-950">
+                  Real Work, Real Impact
+                </span>
+              </h1>
+
+              <p className="max-w-xl text-base leading-relaxed text-amber-800 sm:text-lg">
+                From foundational literacy to advanced deployment—practical, hands-on AI training for learners,
+                professionals, and organisations ready to lead in the age of intelligence.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 fade-in-scroll">
+                <button
+                  type="button"
+                  onClick={handleButtonClick}
+                  className="ripple-container interactive-btn magnetic-btn rounded-xl border-2 border-honey-400/60 bg-gradient-to-r from-honey-50/40 to-butter-50/40 px-6 py-3 text-sm font-semibold text-honey-800 backdrop-blur-sm transition-all duration-300 hover:from-honey-100/50 hover:to-butter-100/50 hover:border-honey-500/70 hover:scale-105 hover:shadow-lg hover:-translate-y-1 interactive-focus"
+                >
+                  Browse Programmes
+                </button>
+                <button
+                  type="button"
+                  onClick={handleButtonClick}
+                  className="ripple-container interactive-btn magnetic-btn rounded-lg border-2 border-butter-400 bg-butter-100/60 px-6 py-3 text-sm font-semibold text-amber-900 transition-all duration-300 hover:bg-butter-200 hover:border-butter-500 hover:scale-105 hover:shadow-lg hover:-translate-y-1 interactive-focus"
+                >
+                  Talk to an Advisor
+                </button>
+                <button
+                  type="button"
+                  onClick={handleButtonClick}
+                  className="ripple-container interactive-btn magnetic-btn rounded-lg border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-indigo-50 px-6 py-3 text-sm font-semibold text-purple-700 transition-all duration-300 hover:from-purple-100 hover:to-indigo-100 hover:scale-105 hover:shadow-lg hover:-translate-y-1 interactive-focus"
+                >
+                  Free Assessment
+                </button>
+              </div>
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2 rounded-lg border border-purple-200/50 bg-gradient-to-r from-purple-50 via-pink-50 to-rose-50 px-3 py-1.5 transition-all duration-300 hover:scale-110 hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
+                  <span className="text-xs font-semibold text-purple-700">Foundation</span>
+                </div>
+                <div className="flex items-center gap-2 rounded-lg border border-indigo-200/50 bg-gradient-to-r from-indigo-50 via-blue-50 to-cyan-50 px-3 py-1.5 transition-all duration-300 hover:scale-110 hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
+                  <span className="text-xs font-semibold text-indigo-700">Certification</span>
+                </div>
+                <div className="flex items-center gap-2 rounded-lg border border-violet-200/50 bg-gradient-to-r from-violet-50 via-purple-50 to-fuchsia-50 px-3 py-1.5 transition-all duration-300 hover:scale-110 hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
+                  <span className="text-xs font-semibold text-violet-700">Corporate</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div className="flex-1">
+              <div className="relative mx-auto max-w-md rounded-2xl border border-butter-200/60 bg-cream-100 p-5 shadow-lg shadow-honey-900/5 backdrop-blur-sm transition-all duration-500 hover:shadow-xl hover:shadow-honey-900/10 hover:-translate-y-1 hover:scale-[1.02]">
+                <div className="flex items-center justify-between gap-4 border-b border-butter-200/50 pb-4">
+                  <div>
+                    <p className="text-xs font-semibold text-amber-950">Live cohort in session</p>
+                    <p className="text-[11px] text-amber-700">Blended in-person and virtual classrooms.</p>
+                  </div>
+                  <div className="flex items-center -space-x-2">
+                    <div className="h-7 w-7 rounded-full border border-slate-200 bg-slate-700" />
+                    <div className="h-7 w-7 rounded-full border border-slate-200 bg-slate-500" />
+                    <div className="h-7 w-7 rounded-full border border-slate-200 bg-slate-400" />
+                  </div>
+                </div>
+
+                <div className="mt-5 grid gap-3 text-[11px] text-amber-800">
+                  <div className="rounded-xl bg-butter-50/50 p-3.5 ring-1 ring-butter-200/50 transition-all duration-300 hover:bg-butter-100/70 hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
+                    <div className="flex items-center justify-between">
+                      <p className="font-semibold text-amber-950">Students & emerging talent</p>
+                      <span className="rounded-full bg-purple-50 px-2.5 py-0.5 text-[10px] font-medium text-purple-700 ring-1 ring-purple-200/50 transition-all hover:scale-110">
+                        Portfolio project
+                      </span>
+                    </div>
+                    <p className="mt-1.5 text-amber-700">Build your first AI chatbot and creative tools.</p>
+                  </div>
+
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <div className="rounded-xl bg-butter-50/50 p-3.5 ring-1 ring-butter-200/50 transition-all duration-300 hover:bg-butter-100/70 hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
+                      <p className="text-[11px] font-semibold text-amber-950">Professionals</p>
+                      <p className="mt-1.5 text-[11px] text-amber-700">Map AI use cases to your workflow and measure impact.</p>
+                    </div>
+                    <div className="rounded-xl bg-butter-50/50 p-3.5 ring-1 ring-butter-200/50 transition-all duration-300 hover:bg-butter-100/70 hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
+                      <p className="text-[11px] font-semibold text-amber-950">Teams & leaders</p>
+                      <p className="mt-1.5 text-[11px] text-amber-700">Follow a Scan → Pilot → Scale pattern for deployment.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-purple-200/40 bg-purple-50/30 px-3.5 py-2.5">
+                    <div>
+                      <p className="text-[11px] font-semibold text-purple-900">Aligned with UK AI priorities</p>
+                      <p className="text-[10px] text-slate-600">Three-pillar skills · assurance by design · SME-ready.</p>
+                    </div>
+                    <button type="button" className="rounded-full bg-purple-600 px-3 py-1 text-[10px] font-semibold text-white transition-all duration-300 hover:bg-purple-500 hover:scale-110 hover:shadow-lg">
+                      View framework
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* AI readiness assessment */}
+        <section id="readiness" className="border-b border-butter-200 bg-gradient-to-b from-cream-100 via-butter-50 to-cream-50">
+          <div className="mx-auto max-w-6xl px-4 py-16">
+            {/* Header */}
+            <div className="text-center">
+              <span className="inline-flex items-center gap-2 rounded-full border border-purple-200/50 bg-purple-50/50 px-4 py-1.5 text-xs font-semibold text-purple-700 transition-all duration-300 hover:scale-105 hover:shadow-md hover:shadow-purple-200/50">
+                Free Diagnostic Tool
+              </span>
+              <h2 className="mt-4 text-3xl font-bold text-amber-950 sm:text-4xl">How ready are you for AI?</h2>
+              <p className="mx-auto mt-3 max-w-2xl text-base text-amber-800">
+                Before you invest in tools, training or big transformation programmes, it helps to know where you
+                stand today. Our free AI Readiness Assessment gives you a clear snapshot and practical next steps.
+              </p>
+            </div>
+
+            {/* Main Content */}
+            <div className="mt-12 grid gap-8 lg:grid-cols-2">
+              {/* Left: Assessment Details */}
+              <div className="space-y-6">
+                <div className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm transition-all duration-500 hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1">
+                  <h3 className="text-lg font-semibold text-slate-950">What we assess</h3>
+                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-purple-100">
+                        <span className="text-sm font-bold text-purple-700">1</span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-900">Strategy & Leadership</p>
+                        <p className="mt-1 text-xs text-slate-600">Vision, goals and executive buy-in</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-100">
+                        <span className="text-sm font-bold text-indigo-700">2</span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-900">Skills & Culture</p>
+                        <p className="mt-1 text-xs text-slate-600">Team capabilities and adoption readiness</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100">
+                        <span className="text-sm font-bold text-blue-700">3</span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-900">Data & Infrastructure</p>
+                        <p className="mt-1 text-xs text-slate-600">Technical foundations and data quality</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-violet-100">
+                        <span className="text-sm font-bold text-violet-700">4</span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-900">Governance & Risk</p>
+                        <p className="mt-1 text-xs text-slate-600">Policies, compliance and assurance</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm transition-all duration-500 hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1">
+                  <h3 className="text-lg font-semibold text-slate-950">What you receive</h3>
+                  <ul className="mt-4 space-y-3 text-sm text-slate-600">
+                    <li className="flex items-start gap-3">
+                      <svg className="mt-0.5 h-5 w-5 shrink-0 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span><strong className="font-semibold text-slate-900">Overall readiness score</strong> across all four pillars</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="mt-0.5 h-5 w-5 shrink-0 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span><strong className="font-semibold text-slate-900">Quick wins for the next 90 days</strong> to build momentum</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="mt-0.5 h-5 w-5 shrink-0 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span><strong className="font-semibold text-slate-900">Suggested training pathways</strong> mapped to your needs</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="mt-0.5 h-5 w-5 shrink-0 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span><strong className="font-semibold text-slate-900">Optional follow-up call</strong> with an advisor</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Right: CTA Card */}
+              <div className="flex flex-col justify-center">
+                <div className="rounded-2xl border border-purple-200/60 bg-gradient-to-br from-white to-purple-50/30 p-8 shadow-xl shadow-purple-500/10 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-2 hover:scale-[1.02]">
+                  <div className="text-center">
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-600 shadow-lg">
+                      <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                      </svg>
+                    </div>
+                    <h3 className="mt-4 text-xl font-bold text-slate-950">Take the Assessment</h3>
+                    <p className="mt-2 text-sm text-slate-600">
+                      Complete in 10–15 minutes and receive an instant report you can share with your team and stakeholders.
+                    </p>
+                  </div>
+
+                  <div className="mt-6 space-y-3">
+                    <div className="flex items-center gap-3 rounded-xl bg-white/80 px-4 py-3 ring-1 ring-slate-200/50">
+                      <svg className="h-5 w-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-sm text-slate-700">10–15 minutes to complete</span>
+                    </div>
+                    <div className="flex items-center gap-3 rounded-xl bg-white/80 px-4 py-3 ring-1 ring-slate-200/50">
+                      <svg className="h-5 w-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      <span className="text-sm text-slate-700">100% free, no payment required</span>
+                    </div>
+                    <div className="flex items-center gap-3 rounded-xl bg-white/80 px-4 py-3 ring-1 ring-slate-200/50">
+                      <svg className="h-5 w-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                      <span className="text-sm text-slate-700">Ideal for teams, SMEs & public sector</span>
+                    </div>
+                  </div>
+
+                  <button type="button" className="mt-8 w-full rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 transition-all duration-300 hover:from-purple-500 hover:to-indigo-500 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/40">
+                    Start Free Assessment →
+                  </button>
+                  <p className="mt-3 text-center text-xs text-slate-500">
+                    Join hundreds of organisations already using our assessment
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Who we train */}
+        <section id="who" className="border-b border-slate-200 bg-slate-100">
+          <div className="mx-auto max-w-6xl px-4 py-14">
+            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h2 className="text-2xl font-semibold text-slate-950">AI training for learners, professionals & teams</h2>
+                <p className="mt-2 max-w-xl text-sm text-slate-600">
+                  Whether you're exploring options, changing career or leading transformation, GEN3BLOCK Training
+                  meets you where you are and helps you take the next step.
+                </p>
+              </div>
+              <p className="max-w-sm text-xs text-slate-500">
+                Open cohorts and bespoke organisational runs. In-person, virtual and hybrid delivery available.
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              <div className="flex flex-col rounded-3xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Students & talent</p>
+                <p className="mt-2 text-sm font-medium text-slate-900">Discover future-ready AI skills early.</p>
+                <ul className="mt-3 space-y-1.5 text-xs text-slate-600">
+                  <li>• Portfolio-ready AI projects</li>
+                  <li>• Stronger applications and statements</li>
+                  <li>• Exposure to industry-standard tools</li>
+                </ul>
+              </div>
+
+              <div className="flex flex-col rounded-3xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Career changers</p>
+                <p className="mt-2 text-sm font-medium text-slate-900">Move into AI-powered roles without a CS degree.</p>
+                <ul className="mt-3 space-y-1.5 text-xs text-slate-600">
+                  <li>• Applied AI and data skills</li>
+                  <li>• Capstone projects for interviews</li>
+                  <li>• Career coaching and prep</li>
+                </ul>
+              </div>
+
+              <div className="flex flex-col rounded-3xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Professionals</p>
+                <p className="mt-2 text-sm font-medium text-slate-900">Translate AI into workflows and products.</p>
+                <ul className="mt-3 space-y-1.5 text-xs text-slate-600">
+                  <li>• Sector-specific use cases</li>
+                  <li>• Measurable productivity gains</li>
+                  <li>• Flexible formats around work</li>
+                </ul>
+              </div>
+
+              <div className="flex flex-col rounded-3xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Teams & organisations</p>
+                <p className="mt-2 text-sm font-medium text-slate-900">Equip teams with shared language and guardrails.</p>
+                <ul className="mt-3 space-y-1.5 text-xs text-slate-600">
+                  <li>• Custom curriculum mapped to roles</li>
+                  <li>• Structured pilots and pathways</li>
+                  <li>• Change and governance support</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Programmes */}
+        <section id="programmes" className="border-b border-slate-200 bg-slate-100">
+          <div className="mx-auto max-w-6xl px-4 py-14">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h2 className="text-2xl font-semibold text-slate-950">Programmes designed for measurable impact</h2>
+                <p className="mt-2 max-w-xl text-sm text-slate-600">
+                  From foundational literacy to advanced deployment, every programme is built around projects and
+                  outcomes—not just slides.
+                </p>
+              </div>
+              <button type="button" className="w-max rounded-full border border-blue-600 px-4 py-1.5 text-xs font-semibold text-blue-600 hover:bg-blue-50">
+                View full programme catalogue
+              </button>
+            </div>
+
+            <div className="mt-8 grid gap-6 lg:grid-cols-3">
+              <div className="flex flex-col rounded-3xl border border-slate-200 bg-white/80 p-5">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Tier 1 · Foundation</p>
+                <h3 className="mt-2 text-lg font-semibold text-slate-950">AI Essentials for Business</h3>
+                <p className="mt-2 text-sm text-slate-600">
+                  A three-session series for leaders and professionals who need clear, practical AI literacy and a
+                  roadmap for adoption.
+                </p>
+                <ul className="mt-3 space-y-1.5 text-xs text-slate-600">
+                  <li>• Understand capabilities and limits</li>
+                  <li>• Hands-on with leading tools</li>
+                  <li>• Identify high-impact use cases</li>
+                  <li>• Leave with an adoption action plan</li>
+                </ul>
+                <div className="mt-4 text-[11px] text-slate-500">
+                  Level: Entry · Format: Online / in-person
+                </div>
+                <button type="button" className="mt-4 w-full rounded-2xl bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-950 hover:bg-white">
+                  Register interest
+                </button>
+              </div>
+
+              <div className="flex flex-col rounded-3xl border border-blue-500/60 bg-white p-5 shadow-lg shadow-blue-500/30">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Tier 2 · Certification</p>
+                <h3 className="mt-2 text-lg font-semibold text-slate-950">AI Practitioner Certificate</h3>
+                <p className="mt-2 text-sm text-slate-600">
+                  A 12-week applied programme for people moving into AI-focused roles, blending live teaching, labs
+                  and a capstone project.
+                </p>
+                <ul className="mt-3 space-y-1.5 text-xs text-slate-600">
+                  <li>• Python, data and notebooks</li>
+                  <li>• Core ML concepts and projects</li>
+                  <li>• Deployment, ethics and assurance</li>
+                  <li>• Sector-aligned capstone project</li>
+                </ul>
+                <div className="mt-4 text-[11px] text-slate-500">Level: Intermediate · Hybrid delivery</div>
+                <button type="button" className="mt-4 w-full rounded-2xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-500">
+                  Apply for next cohort
+                </button>
+              </div>
+
+              <div className="flex flex-col rounded-3xl border border-slate-200 bg-white/80 p-5">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Tier 3 · Corporate</p>
+                <h3 className="mt-2 text-lg font-semibold text-slate-950">Enterprise AI Transformation</h3>
+                <p className="mt-2 text-sm text-slate-600">
+                  Bespoke programmes that bring together leadership, technical and frontline teams to adopt AI safely
+                  and at scale.
+                </p>
+                <ul className="mt-3 space-y-1.5 text-xs text-slate-600">
+                  <li>• Skills and capability assessment</li>
+                  <li>• Scan → Pilot → Scale pattern</li>
+                  <li>• Departmental workshops and labs</li>
+                  <li>• Governance, risk and assurance support</li>
+                </ul>
+                <div className="mt-4 text-[11px] text-slate-500">Levels: All staff · On-site / virtual / hybrid</div>
+                <button type="button" className="mt-4 w-full rounded-2xl border border-blue-600 px-4 py-2 text-xs font-semibold text-blue-600 hover:bg-blue-50">
+                  Request organisational briefing
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* UK policy alignment */}
+        <section id="policy" className="border-b border-slate-200 bg-slate-100">
+          <div className="mx-auto max-w-6xl px-4 py-14">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h2 className="text-2xl font-semibold text-slate-950">Features aligned to UK AI policy</h2>
+                <p className="mt-2 max-w-2xl text-sm text-slate-600">
+                  GEN3BLOCK Training is designed to plug directly into the UK's AI skills and adoption agenda, so
+                  employers and partners can align programmes with national priorities and local skills plans.
+                </p>
+              </div>
+              <p className="max-w-sm text-xs text-slate-500">
+                Sector pathways · three-pillar skills · adoption toolkit · assurance by design.
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Employer pathways</p>
+                <p className="mt-2 text-sm text-slate-900">Sector-specific design</p>
+                <p className="mt-1 text-xs text-slate-600">
+                  Programmes co-designed with employers across health, finance, manufacturing, creative, construction
+                  and life sciences.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Three-pillar skills</p>
+                <p className="mt-2 text-sm text-slate-900">Technical · transferable · responsible</p>
+                <p className="mt-1 text-xs text-slate-600">
+                  Tracks map learning outcomes across technical, non-technical and responsible/ethical AI skills at
+                  entry, mid and leadership levels.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Adoption toolkit</p>
+                <p className="mt-2 text-sm text-slate-900">From idea to scale</p>
+                <p className="mt-1 text-xs text-slate-600">
+                  Leaders receive staged adoption pathways, checklists and templates to assess readiness and de-risk
+                  rollouts.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Scan → Pilot → Scale</p>
+                <p className="mt-2 text-sm text-slate-900">Structured delivery pattern</p>
+                <p className="mt-1 text-xs text-slate-600">
+                  Training, labs and executive sessions follow a discovery–pilot–scale cadence with procurement and
+                  assurance built in.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Assurance & safety</p>
+                <p className="mt-2 text-sm text-slate-900">By design</p>
+                <p className="mt-1 text-xs text-slate-600">
+                  Modules include assurance techniques, bias and risk audits and documentation practices aligned with
+                  pro-innovation regulation.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">SME-ready formats</p>
+                <p className="mt-2 text-sm text-slate-900">Short, modular and flexible</p>
+                <p className="mt-1 text-xs text-slate-600">
+                  CPD-friendly, micro-learning formats that address cost, time and digital literacy barriers for SMEs
+                  and non-technical teams.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Regional planning</p>
+                <p className="mt-2 text-sm text-slate-900">LSIP-ready</p>
+                <p className="mt-1 text-xs text-slate-600">
+                  Cohorts can plug into Local Skills Improvement Plans and regional priorities, supporting inclusive
+                  access beyond major hubs.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Compute & data</p>
+                <p className="mt-2 text-sm text-slate-900">Readiness labs</p>
+                <p className="mt-1 text-xs text-slate-600">
+                  Teams learn to work with modern AI compute and responsible data stewardship patterns aligned with
+                  the UK's focus on sovereign compute and data infrastructure.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Leadership fluency</p>
+                <p className="mt-2 text-sm text-slate-900">Decisions, not buzzwords</p>
+                <p className="mt-1 text-xs text-slate-600">
+                  Decision frameworks for value capture, public/private exemplars and procurement-aware guidance for
+                  adoption at scale.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Inclusive talent</p>
+                <p className="mt-2 text-sm text-slate-900">Widening participation</p>
+                <p className="mt-1 text-xs text-slate-600">
+                  Delivery models, pacing and support widen participation across under-represented groups and
+                  regions.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Measurable ROI</p>
+                <p className="mt-2 text-sm text-slate-900">Evidence of impact</p>
+                <p className="mt-1 text-xs text-slate-600">
+                  Programmes define before/after metrics such as time saved, quality uplift and error reduction.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section id="faqs" className="border-b border-slate-200 bg-slate-100">
+          <div className="mx-auto max-w-6xl px-4 py-14">
+            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+              <div className="max-w-md">
+                <h2 className="text-2xl font-semibold text-slate-950">Frequently asked questions</h2>
+                <p className="mt-2 text-sm text-slate-600">
+                  If you can't find what you're looking for, reach out and we'll help you find the right
+                  programme or format.
+                </p>
+              </div>
+              <div className="flex flex-1 flex-col gap-4 text-sm text-slate-700">
+                <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Experience</p>
+                  <h3 className="mt-2 text-sm font-semibold text-slate-950">Do I need prior programming experience?</h3>
+                  <p className="mt-1 text-xs text-slate-600">
+                    Foundation workshops are designed for complete beginners. Certification and advanced tracks are
+                    better if you have some programming or data experience, and we clearly flag prerequisites on
+                    each course page.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Format</p>
+                  <h3 className="mt-2 text-sm font-semibold text-slate-950">Are sessions live or pre-recorded?</h3>
+                  <p className="mt-1 text-xs text-slate-600">
+                    Core delivery is live and interactive. Selected sessions are recorded for on-demand review, but we
+                    encourage live attendance.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Careers</p>
+                  <h3 className="mt-2 text-sm font-semibold text-slate-950">Will this help with my career progression?</h3>
+                  <p className="mt-1 text-xs text-slate-600">
+                    We can't promise specific roles, but programmes are built to maximise your chances: practical
+                    projects, interview-ready stories and access to a network of employers and practitioners.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Organisations</p>
+                  <h3 className="mt-2 text-sm font-semibold text-slate-950">Can my organisation sponsor or fund places?</h3>
+                  <p className="mt-1 text-xs text-slate-600">
+                    Yes. We work directly with HR, L&D and leadership teams, provide invoices and can align
+                    programmes to internal development frameworks and budgets.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact & resources */}
+        <section className="border-b border-slate-200 bg-slate-100">
+          <div className="mx-auto max-w-6xl px-4 py-14">
+            <div className="grid gap-10 lg:grid-cols-[1.3fr_minmax(0,1fr)]">
+              <div>
+                <h2 className="text-2xl font-semibold text-slate-950">Ready to plan your next step?</h2>
+                <p className="mt-2 max-w-xl text-sm text-slate-600">
+                  Tell us a little about your goals and we'll help you choose the right programme, cohort and
+                  format—for you or your organisation.
+                </p>
+
+                <div className="mt-6 grid gap-3 text-sm text-slate-700 md:grid-cols-2">
+                  <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Individuals</p>
+                    <h3 className="mt-1 text-sm font-semibold text-slate-950">Talk to an advisor</h3>
+                    <p className="mt-1 text-xs text-slate-600">
+                      Book a 30-minute call to discuss your background, goals and the best starting point.
+                    </p>
+                    <button type="button" className="mt-3 w-full rounded-2xl bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-950 hover:bg-white">
+                      Book consultation
+                    </button>
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Organisations</p>
+                    <h3 className="mt-1 text-sm font-semibold text-slate-950">Request training proposal</h3>
+                    <p className="mt-1 text-xs text-slate-600">
+                      Share your priorities and we'll design a programme aligned to your teams, region and sector.
+                    </p>
+                    <button type="button" className="mt-3 w-full rounded-2xl border border-blue-600 px-4 py-2 text-xs font-semibold text-blue-600 hover:bg-blue-50">
+                      Request proposal
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mt-6 space-y-2 text-xs text-slate-600">
+                  <p>
+                    <span className="font-semibold text-slate-900">Email:</span> hello@gen3block.com
+                  </p>
+                  <p>
+                    <span className="font-semibold text-slate-900">Location:</span> Northampton-based training
+                    centre with hybrid and online options.
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-sm font-semibold text-slate-900">Start learning today</h3>
+                <div className="space-y-3 text-xs text-slate-600">
+                  <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Guide</p>
+                    <p className="mt-1 text-sm font-medium text-slate-950">The non-technical guide to AI at work</p>
+                    <p className="mt-1">
+                      A short, practical PDF covering key concepts, common pitfalls and realistic examples from UK
+                      organisations.
+                    </p>
+                    <button type="button" className="mt-3 w-full rounded-2xl bg-slate-100 px-4 py-2 text-[11px] font-semibold text-slate-950 hover:bg-white">
+                      Download free guide
+                    </button>
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Live session</p>
+                    <p className="mt-1 text-sm font-medium text-slate-950">AI Fridays: live demo & Q&A</p>
+                    <p className="mt-1">
+                      Regular short sessions showcasing tools, workflows and real examples—with open Q&A.
+                    </p>
+                    <button type="button" className="mt-3 w-full rounded-2xl border border-blue-600 px-4 py-2 text-[11px] font-semibold text-blue-600 hover:bg-blue-50">
+                      Register for next session
+                    </button>
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">Community</p>
+                    <p className="mt-1 text-sm font-medium text-slate-950">Join the GEN3BLOCK learning community</p>
+                    <p className="mt-1">
+                      Get updates on new cohorts, tutorials and events, plus a space to connect with other learners
+                      and practitioners.
+                    </p>
+                    <button type="button" className="mt-3 w-full rounded-2xl border border-blue-600 px-4 py-2 text-[11px] font-semibold text-blue-600 hover:bg-blue-50">
+                      Join the community
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-purple-500/15 bg-gradient-to-b from-[#0A1024] to-[#0D1430]">
+        <div className="mx-auto max-w-6xl px-6 py-12">
+          <div className="grid gap-8 md:grid-cols-3">
+            {/* Brand Section */}
+            <div>
+              <div className="leading-tight">
+                <p className="bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-2xl font-black tracking-wider text-transparent">
+                  GEN3BLOCK
+                </p>
+                <p className="text-xs font-light tracking-widest text-slate-400">TRAINING</p>
+              </div>
+              <p className="mt-4 text-sm font-light text-slate-400">
+                AI skills for real work, real impact.
+              </p>
+            </div>
+
+            {/* Contact Section */}
+            <div>
+              <h3 className="mb-4 text-sm font-semibold text-[#E2E8F0]">Contact</h3>
+              <div className="space-y-3 text-sm font-light text-slate-400">
+                <p>
+                  <span className="text-[#7BDFF2]">Email:</span> hello@gen3block.com
+                </p>
+                <p>
+                  <span className="text-[#7BDFF2]">Location:</span> Northampton, United Kingdom
+                </p>
+              </div>
+            </div>
+
+            {/* Links Section */}
+            <div>
+              <h3 className="mb-4 text-sm font-semibold text-[#E2E8F0]">Quick Links</h3>
+              <div className="flex flex-col gap-2 text-sm font-light">
+                <a href="#safeguarding" className="text-slate-400 transition hover:text-[#B8F1FF]">
+                  Safeguarding
+                </a>
+                <a href="#privacy" className="text-slate-400 transition hover:text-[#B8F1FF]">
+                  Privacy Policy
+                </a>
+                <a href="#terms" className="text-slate-400 transition hover:text-[#B8F1FF]">
+                  Terms of Service
+                </a>
+                <a href="#cookies" className="text-slate-400 transition hover:text-[#B8F1FF]">
+                  Cookie Policy
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Section */}
+          <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-purple-500/15 pt-8 text-sm font-light text-slate-500 md:flex-row">
+            <p>© {new Date().getFullYear()} GEN3BLOCK Training. All rights reserved.</p>
+            <p className="text-xs">Powered by excellence in AI education</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
