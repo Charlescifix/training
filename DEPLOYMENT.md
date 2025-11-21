@@ -72,10 +72,21 @@ The site will be live at this URL with all the enhanced gradient styling, animat
 - Verify the start command in railway.json
 - Review Railway deployment logs
 
+**"Host not allowed" Error:**
+- This is now fixed in vite.config.js with allowedHosts configuration
+- Railway domains (.railway.app) are whitelisted
+- If you see this error, redeploy after pulling latest changes
+
 **Images Not Loading:**
 - Check browser console for CORS errors
 - Verify Unsplash image URLs are accessible
 - Check network tab for failed requests
+
+**Slow Deployments:**
+- First deployment takes ~5-10 minutes (cold build)
+- Subsequent deployments should be faster (2-3 minutes)
+- Railway caches dependencies to speed up builds
+- .npmrc is configured to skip unnecessary checks
 
 ## Local Testing of Production Build
 
