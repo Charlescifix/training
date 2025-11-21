@@ -129,7 +129,7 @@ export default function Gen3blockTrainingLandingPage() {
     <div className="min-h-screen bg-slate-100 text-slate-900 font-sans">
       {/* Navigation */}
       <header className="sticky top-0 z-50 border-b border-blue-500/20 bg-gradient-to-b from-[#0A1024] to-[#0D1430]">
-        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-9 px-6">
+        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-3 md:gap-6 lg:gap-9 px-4 sm:px-6">
           <div className="flex items-center gap-3">
             <div className="leading-tight">
               <p className="bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-2xl font-black tracking-wider text-transparent">
@@ -147,11 +147,11 @@ export default function Gen3blockTrainingLandingPage() {
             <a href="#faqs" onClick={(e) => handleNavClick(e, '#faqs')} className="animated-underline transition smooth-color hover:text-blue-400 glow-hover">FAQs</a>
           </nav>
 
-          <div className="flex items-center gap-3">
-            <button type="button" className="hidden rounded-xl border-2 border-blue-400/60 bg-gradient-to-r from-blue-50/40 to-cyan-50/40 px-4 py-2 text-xs font-semibold text-blue-300 backdrop-blur-sm transition hover:from-blue-100/50 hover:to-cyan-100/50 hover:border-blue-500/70 md:inline-flex">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button type="button" className="hidden sm:inline-flex rounded-xl border-2 border-blue-400/60 bg-gradient-to-r from-blue-50/40 to-cyan-50/40 px-3 sm:px-4 py-2 text-xs font-semibold text-blue-300 backdrop-blur-sm transition hover:from-blue-100/50 hover:to-cyan-100/50 hover:border-blue-500/70">
               Download overview
             </button>
-            <button type="button" className="rounded-xl border-2 border-blue-400/60 bg-gradient-to-r from-blue-50/40 to-cyan-50/40 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm transition hover:from-blue-100/50 hover:to-cyan-100/50 hover:border-blue-500/70">
+            <button type="button" className="rounded-xl border-2 border-blue-400/60 bg-gradient-to-r from-blue-50/40 to-cyan-50/40 px-3 sm:px-4 py-2 text-[10px] sm:text-xs font-semibold text-white backdrop-blur-sm transition hover:from-blue-100/50 hover:to-cyan-100/50 hover:border-blue-500/70">
               Book consultation
             </button>
           </div>
@@ -161,7 +161,7 @@ export default function Gen3blockTrainingLandingPage() {
       <main>
         {/* Hero */}
         <section className="border-b border-slate-200 bg-gradient-to-b from-slate-100 via-white to-slate-100">
-          <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 pb-16 pt-14 lg:flex-row-reverse lg:items-center">
+          <div className="mx-auto flex max-w-6xl flex-col gap-8 sm:gap-10 px-4 sm:px-6 pb-12 sm:pb-16 pt-10 sm:pt-14 lg:flex-row-reverse lg:items-center">
             <div className="flex-1 space-y-6">
               <span className="inline-flex items-center gap-2 rounded-full border border-blue-300/50 bg-blue-50/80 px-4 py-2 text-xs font-medium text-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-md hover:shadow-blue-200/50">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
@@ -180,25 +180,25 @@ export default function Gen3blockTrainingLandingPage() {
                 professionals, and organisations ready to lead in the age of intelligence.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 fade-in-scroll">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4 fade-in-scroll">
                 <button
                   type="button"
                   onClick={handleButtonClick}
-                  className="ripple-container interactive-btn magnetic-btn rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition-all duration-300 hover:from-blue-700 hover:to-cyan-700 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 hover:-translate-y-1 interactive-focus"
+                  className="ripple-container interactive-btn magnetic-btn rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition-all duration-300 hover:from-blue-700 hover:to-cyan-700 hover:shadow-xl hover:shadow-blue-500/40 sm:hover:scale-105 sm:hover:-translate-y-1 interactive-focus"
                 >
                   Browse Programmes
                 </button>
                 <button
                   type="button"
                   onClick={handleButtonClick}
-                  className="ripple-container interactive-btn magnetic-btn rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-500/30 transition-all duration-300 hover:from-amber-600 hover:to-orange-600 hover:shadow-xl hover:shadow-amber-500/40 hover:scale-105 hover:-translate-y-1 interactive-focus"
+                  className="ripple-container interactive-btn magnetic-btn rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-500/30 transition-all duration-300 hover:from-amber-600 hover:to-orange-600 hover:shadow-xl hover:shadow-amber-500/40 sm:hover:scale-105 sm:hover:-translate-y-1 interactive-focus"
                 >
                   Talk to an Advisor
                 </button>
                 <button
                   type="button"
                   onClick={handleButtonClick}
-                  className="ripple-container interactive-btn magnetic-btn rounded-xl bg-gradient-to-r from-emerald-500 to-green-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:from-emerald-600 hover:to-green-600 hover:shadow-xl hover:shadow-emerald-500/40 hover:scale-105 hover:-translate-y-1 interactive-focus"
+                  className="ripple-container interactive-btn magnetic-btn rounded-xl bg-gradient-to-r from-emerald-500 to-green-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:from-emerald-600 hover:to-green-600 hover:shadow-xl hover:shadow-emerald-500/40 sm:hover:scale-105 sm:hover:-translate-y-1 interactive-focus"
                 >
                   Free Assessment
                 </button>
@@ -207,7 +207,7 @@ export default function Gen3blockTrainingLandingPage() {
             </div>
 
             <div className="flex-1">
-              <div className="relative mx-auto h-96 max-w-md rounded-2xl shadow-2xl transition-all duration-500 hover:shadow-3xl hover:-translate-y-1 hover:scale-[1.02] bg-slate-800">
+              <div className="relative mx-auto h-64 sm:h-80 lg:h-96 max-w-md rounded-2xl shadow-2xl transition-all duration-500 hover:shadow-3xl hover:-translate-y-1 hover:scale-[1.02] bg-slate-800">
                 {/* Hero Image */}
                 <img
                   src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80"
@@ -250,7 +250,7 @@ export default function Gen3blockTrainingLandingPage() {
 
         {/* AI readiness assessment */}
         <section id="readiness" className="border-b border-slate-200 bg-gradient-to-b from-white via-slate-50 to-slate-100">
-          <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
             {/* Header */}
             <div className="text-center">
               <span className="inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-blue-50/50 px-4 py-1.5 text-xs font-semibold text-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-md hover:shadow-blue-200/50">
@@ -390,7 +390,7 @@ export default function Gen3blockTrainingLandingPage() {
 
         {/* Who we train */}
         <section id="who" className="border-b border-slate-200 bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-100">
-          <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
             {/* Enhanced Header */}
             <div className="text-center">
               <span className="inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-gradient-to-r from-blue-50 to-cyan-50 px-4 py-1.5 text-xs font-semibold text-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-md hover:shadow-blue-200/50">
@@ -596,7 +596,7 @@ export default function Gen3blockTrainingLandingPage() {
 
         {/* Programmes */}
         <section id="programmes" className="border-b border-slate-200 bg-gradient-to-br from-white via-slate-50 to-slate-100">
-          <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
             {/* Enhanced Header */}
             <div className="text-center">
               <span className="inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-gradient-to-r from-blue-50 to-cyan-50 px-4 py-1.5 text-xs font-semibold text-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-md hover:shadow-blue-200/50">
@@ -621,7 +621,7 @@ export default function Gen3blockTrainingLandingPage() {
             </div>
 
             {/* Enhanced Cards Grid */}
-            <div className="mt-12 grid gap-8 lg:grid-cols-3">
+            <div className="mt-10 sm:mt-12 grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
               {/* Tier 1: Foundation */}
               <div className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-300/50 bg-gradient-to-br from-white via-slate-50/50 to-white p-6 shadow-lg shadow-slate-500/5 transition-all duration-500 hover:shadow-2xl hover:shadow-slate-500/10 hover:-translate-y-2">
                 <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gradient-to-br from-slate-400/10 to-slate-500/10 blur-3xl transition-all duration-500 group-hover:scale-150" />
@@ -809,7 +809,7 @@ export default function Gen3blockTrainingLandingPage() {
 
         {/* UK policy alignment */}
         <section id="policy" className="border-b border-slate-200 bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-100">
-          <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
             {/* Enhanced Header */}
             <div className="text-center">
               <span className="inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-gradient-to-r from-blue-50 to-cyan-50 px-4 py-1.5 text-xs font-semibold text-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-md hover:shadow-blue-200/50">
@@ -1060,7 +1060,7 @@ export default function Gen3blockTrainingLandingPage() {
 
         {/* FAQs */}
         <section id="faqs" className="border-b border-slate-200 bg-gradient-to-br from-white via-slate-50 to-slate-100">
-          <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
             {/* Enhanced Header */}
             <div className="text-center">
               <span className="inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-gradient-to-r from-blue-50 to-cyan-50 px-4 py-1.5 text-xs font-semibold text-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-md hover:shadow-blue-200/50">
@@ -1189,10 +1189,10 @@ export default function Gen3blockTrainingLandingPage() {
           <div className="absolute -left-32 top-20 h-64 w-64 rounded-full bg-gradient-to-br from-blue-400/10 to-cyan-400/10 blur-3xl" />
           <div className="absolute -right-32 bottom-20 h-64 w-64 rounded-full bg-gradient-to-br from-indigo-400/10 to-blue-400/10 blur-3xl" />
 
-          <div className="relative mx-auto max-w-6xl px-4 py-14">
-            <div className="grid gap-10 lg:grid-cols-[1.3fr_minmax(0,1fr)]">
+          <div className="relative mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-14">
+            <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1.3fr_minmax(0,1fr)]">
               <div>
-                <h2 className="text-2xl font-bold text-slate-950">Ready to plan your next step?</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-950">Ready to plan your next step?</h2>
                 <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
                   Tell us a little about your goals and we'll help you choose the right programme, cohort and
                   format—for you or your organisation.
@@ -1265,7 +1265,7 @@ export default function Gen3blockTrainingLandingPage() {
               </div>
 
               <div>
-                <h3 className="text-sm font-bold text-slate-900">Start learning today</h3>
+                <h3 className="text-sm sm:text-base font-bold text-slate-900">Start learning today</h3>
                 <div className="mt-4 space-y-3 text-xs text-slate-600">
                   {/* Guide Card */}
                   <div className="group relative overflow-hidden rounded-2xl border border-blue-200/50 bg-gradient-to-br from-white to-blue-50/30 p-4 shadow-lg shadow-blue-500/5 transition-all duration-500 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1">
@@ -1343,7 +1343,7 @@ export default function Gen3blockTrainingLandingPage() {
 
       {/* Footer */}
       <footer className="border-t border-blue-500/15 bg-gradient-to-b from-[#0A1024] to-[#0D1430]">
-        <div className="mx-auto max-w-6xl px-6 py-12">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 sm:py-12">
           <div className="grid gap-8 md:grid-cols-3">
             {/* Brand Section */}
             <div>
